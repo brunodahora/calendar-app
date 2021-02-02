@@ -1,21 +1,4 @@
-import styled from 'styled-components';
-
-const DaysOfTheWeekContainer = styled.div`
-  background-color: steelblue;
-  border: 1px solid gray;
-  display: flex;
-  flex-direction: row;
-`;
-
-const DayOfTheWeek = styled.h2`
-  align-items: center;
-  display: flex;
-  color: white;
-  flex: 1;
-  font-size: 14px;
-  justify-content: center;
-  margin: 0;
-`;
+import { DaysOfTheWeekContainer, DayOfTheWeek } from './styles';
 
 const DaysOfTheWeek = (): JSX.Element => (
   <DaysOfTheWeekContainer>

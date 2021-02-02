@@ -31,7 +31,12 @@ describe('Calendar App', () => {
         render(<App />);
         expect(screen.getByText('31')).toBeInTheDocument();
         expect(screen.getByText('10')).toBeInTheDocument();
-        expect(screen.queryByText('1')).toHaveLength(2);
+        expect(screen.queryAllByText('1')).toHaveLength(2);
+      });
+
+      test('Then I should see the complete calendar', () => {
+        const { container } = render(<App />);
+        expect(container.firstChild).toMatchSnapshot();
       });
     });
   });

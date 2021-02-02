@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Calendar App Given I open the calendar And I am on February, 2021 Then I should see the complete calendar 1`] = `
+<header>
+  <div
+    class="sc-gKsewC jmmwzU"
+  >
+    <h1>
+      February, 2021
+    </h1>
+  </div>
+  <div
+    class="sc-eCssSg kGXomB"
+  >
+    <h2
+      class="sc-jSgupP eSjFan"
+    >
+      Sunday
+    </h2>
+    <h2
+      class="sc-jSgupP eSjFan"
+    >
+      Monday
+    </h2>
+    <h2
+      class="sc-jSgupP eSjFan"
+    >
+      Tuesday
+    </h2>
+    <h2
+      class="sc-jSgupP eSjFan"
+    >
+      Wednesday
+    </h2>
+    <h2
+      class="sc-jSgupP eSjFan"
+    >
+      Thursday
+    </h2>
+    <h2
+      class="sc-jSgupP eSjFan"
+    >
+      Friday
+    </h2>
+    <h2
+      class="sc-jSgupP eSjFan"
+    >
+      Saturday
+    </h2>
+  </div>
+</header>
+`;

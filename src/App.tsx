@@ -4,8 +4,10 @@ import MonthYear from './components/MonthYear';
 
 const App = (): JSX.Element => (
   <>
-    <MonthYear />
-    <DaysOfTheWeek />
+    <header>
+      <MonthYear />
+      <DaysOfTheWeek />
+    </header>
     <Calendar />
   </>
 );
