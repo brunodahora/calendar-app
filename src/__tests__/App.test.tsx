@@ -26,6 +26,13 @@ describe('Calendar App', () => {
         expect(screen.getByText('Friday')).toBeInTheDocument();
         expect(screen.getByText('Saturday')).toBeInTheDocument();
       });
+
+      test('Then I should see all days from february and the completing days from previous and next months', () => {
+        render(<App />);
+        expect(screen.getByText('31')).toBeInTheDocument();
+        expect(screen.getByText('10')).toBeInTheDocument();
+        expect(screen.queryByText('1')).toHaveLength(2);
+      });
     });
   });
 });
