@@ -1,3 +1,3 @@
-const Calendar = () => <div>Calendar</div>;
+const Calendar = (): JSX.Element => <div>Calendar</div>;
 
 export default Calendar;
