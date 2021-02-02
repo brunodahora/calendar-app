@@ -15,6 +15,17 @@ describe('Calendar App', () => {
         render(<App />);
         expect(screen.getByText('February, 2021')).toBeInTheDocument();
       });
+
+      test('Then I should see the days of the week', () => {
+        render(<App />);
+        expect(screen.getByText('Sunday')).toBeInTheDocument();
+        expect(screen.getByText('Monday')).toBeInTheDocument();
+        expect(screen.getByText('Tuesday')).toBeInTheDocument();
+        expect(screen.getByText('Wednesday')).toBeInTheDocument();
+        expect(screen.getByText('Thursday')).toBeInTheDocument();
+        expect(screen.getByText('Friday')).toBeInTheDocument();
+        expect(screen.getByText('Saturday')).toBeInTheDocument();
+      });
     });
   });
 });
