@@ -5,6 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 if (process.env.NODE_ENV !== 'production') {
+  // eslint-disable-next-line
   const axe = require('@axe-core/react');
   axe(React, ReactDOM, 1000);
 }
