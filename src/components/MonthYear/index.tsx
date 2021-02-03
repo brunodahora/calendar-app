@@ -24,11 +24,11 @@ const MonthYear = (): JSX.Element => {
   const date = useSelector(selectors.getCurrentDate);
 
   const {
-    currentDate: { previousMonth },
+    currentDate: { previousMonth, nextMonth },
   } = actions;
 
   const goToPreviousMonth = () => dispatch(previousMonth());
-  const goToNextMonth = () => console.log('next');
+  const goToNextMonth = () => dispatch(nextMonth());
 
   return (
     <MonthYearContainer>
