@@ -14,9 +14,17 @@ const MonthYearContainer = styled.div`
 `;
 
 const ArrowButton = styled.button`
+  align-items: center;
   background-color: transparent;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  :active {
+    background-color: steelblue;
+  }
 `;
 
 const MonthYear = (): JSX.Element => {

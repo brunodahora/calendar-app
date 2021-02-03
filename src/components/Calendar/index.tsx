@@ -62,6 +62,7 @@ const Calendar = (): JSX.Element => {
     <CalendarGrid>
       {previousMonthDays.map((previousMonthDate: Date) => (
         <Day
+          id={previousMonthDate.toISOString()}
           key={previousMonthDate.toISOString()}
           day={previousMonthDate.getDate()}
           isWeekend={isWeekend(previousMonthDate)}
@@ -69,6 +70,7 @@ const Calendar = (): JSX.Element => {
       ))}
       {daysOfMonth.map((currentMonthDate: Date) => (
         <Day
+          id={currentMonthDate.toISOString()}
           key={currentMonthDate.toISOString()}
           day={currentMonthDate.getDate()}
           isWeekend={isWeekend(currentMonthDate)}
@@ -77,6 +79,7 @@ const Calendar = (): JSX.Element => {
       ))}
       {nextMonthDays.map((nextMonthDate: Date) => (
         <Day
+          id={nextMonthDate.toISOString()}
           key={nextMonthDate.toISOString()}
           day={nextMonthDate.getDate()}
           isWeekend={isWeekend(nextMonthDate)}
