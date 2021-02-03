@@ -1,5 +1,11 @@
-import { useState } from 'react';
-import { ReminderDropdownContainer } from './styles';
+import { useState, ChangeEvent } from 'react';
+import {
+  ReminderDropdownContainer,
+  ReminderLabel,
+  ReminderInput,
+  ReminderFooter,
+  ReminderButton,
+} from './styles';
 
 type Props = {
   reminder?: {
@@ -8,15 +14,96 @@ type Props = {
     time: string;
     city: string;
   };
+  closeReminderDropdown: () => void;
 };
 
-const ReminderDropdown = ({ reminder }: Props): JSX.Element => {
+const ReminderDropdown = ({
+  reminder,
+  closeReminderDropdown,
+}: Props): JSX.Element => {
   const [description, setDescription] = useState(reminder?.description || '');
   const [color, setColor] = useState(reminder?.color || '');
   const [time, setTime] = useState(reminder?.time || '');
   const [city, setCity] = useState(reminder?.city || '');
 
-  return <ReminderDropdownContainer>Teste</ReminderDropdownContainer>;
+  const onChange = (setter: (value: string) => void) => (
+    e: ChangeEvent<HTMLInputElement>
+  ) => setter(e.currentTarget.value);
+
+  const onSave = () => {
+    let errors = '';
+    if (!description) {
+      errors += '\nDescription cannot be empty';
+    }
+    if (!time) {
+      errors += '\nTime cannot be empty';
+    }
+    if (time && !/^([01][0-9])|(2[03]):?\d{2}/.test(time)) {
+      errors += '\nTime must be of format HH:mm';
+    }
+    if (!color) {
+      errors += '\nColor cannot be empty';
+    }
+    if (color && !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
+      errors += '\nColor must be a valid Hex value';
+    }
+    if (!city) {
+      errors += '\nCity cannot be empty';
+    }
+    if (errors) alert(errors);
+    else {
+      alert('Reminder created');
+      closeReminderDropdown();
+    }
+  };
+
+  return (
+    <ReminderDropdownContainer>
+      <h3>{reminder ? 'Edit' : 'Add'} Reminder</h3>
+      <ReminderLabel htmlFor="description">Description</ReminderLabel>
+      <ReminderInput
+        type="text"
+        name="Description"
+        id="description"
+        value={description}
+        onChange={onChange(setDescription)}
+      />
+      <ReminderLabel htmlFor="time">Time</ReminderLabel>
+      <ReminderInput
+        type="text"
+        name="Time"
+        id="time"
+        value={time}
+        onChange={onChange(setTime)}
+      />
+      <ReminderLabel htmlFor="color">Color</ReminderLabel>
+      <ReminderInput
+        type="text"
+        name="Color"
+        id="color"
+        value={color}
+        onChange={onChange(setColor)}
+      />
+      <ReminderLabel htmlFor="city">City</ReminderLabel>
+      <ReminderInput
+        type="text"
+        name="City"
+        id="city"
+        value={city}
+        onChange={onChange(setCity)}
+      />
+      <ReminderFooter>
+        {reminder && (
+          <ReminderButton title="Delete" color="red">
+            Delete
+          </ReminderButton>
+        )}
+        <ReminderButton title="Save" color="navy" onClick={onSave}>
+          Save
+        </ReminderButton>
+      </ReminderFooter>
+    </ReminderDropdownContainer>
+  );
 };
 
 export default ReminderDropdown;

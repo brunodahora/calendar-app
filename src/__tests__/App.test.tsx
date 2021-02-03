@@ -66,18 +66,19 @@ describe('Calendar App', () => {
         });
       });
 
-      describe('When I click in the add reminder button at February, 12th', () => {
+      describe('When I click in the add reminder button at March, 12th', () => {
         beforeEach(() => {
           userEvent.click(
             within(
-              screen.getByTestId(new Date(2021, 1, 2).toISOString())
+              screen.getByTestId(new Date(2021, 2, 12).toISOString())
             ).getByRole('button', { name: /add reminder/i })
           );
         });
 
         test('Then I should see a dropdown with the information to set the reminder', () => {
+          expect(screen.getByText('Add Reminder')).toBeInTheDocument();
           expect(
-            screen.getByRole('textbox', { name: /reminder/i })
+            screen.getByRole('textbox', { name: /description/i })
           ).toBeInTheDocument();
           expect(
             screen.getByRole('textbox', { name: /time/i })

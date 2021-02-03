@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { useRef, useState } from 'react';
+import { Portal } from 'react-portal';
 import { usePopper } from 'react-popper';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { ReactComponent as Add } from '../../assets/add.svg';
@@ -28,16 +29,13 @@ const Day = ({
 }: Props): JSX.Element => {
   const referenceElement = useRef(null);
   const popperElement = useRef(null);
-  const arrowElement = useRef(null);
   const [showReminderDropdown, setShowReminderDropdown] = useState(false);
 
   const { styles, attributes } = usePopper(
     referenceElement.current,
     popperElement.current,
     {
-      modifiers: [
-        { name: 'arrow', options: { element: arrowElement.current } },
-      ],
+      placement: 'auto',
     }
   );
 
@@ -64,18 +62,17 @@ const Day = ({
         >
           <DeleteSweep />
         </IconButton>
-        {showReminderDropdown && (
-          <OutsideClickHandler onOutsideClick={closeReminderDropdown}>
-            <div
-              ref={popperElement}
-              style={styles.popper}
-              {...attributes.popper}
-            >
-              <ReminderDropdown />
-              <div ref={arrowElement} style={styles.arrow} />
-            </div>
-          </OutsideClickHandler>
-        )}
+        <Portal>
+          <div ref={popperElement} style={styles.popper} {...attributes.popper}>
+            {showReminderDropdown && (
+              <OutsideClickHandler onOutsideClick={closeReminderDropdown}>
+                <ReminderDropdown
+                  closeReminderDropdown={closeReminderDropdown}
+                />
+              </OutsideClickHandler>
+            )}
+          </div>
+        </Portal>
       </DayHeader>
       <DayFillSpace />
     </DayContainer>

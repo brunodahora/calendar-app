@@ -3,10 +3,10 @@
 exports[`Calendar App Given I open the calendar And I am on February, 2021 Then I should see the complete calendar 1`] = `
 <header>
   <div
-    class="sc-gKsewC eHKeZp"
+    class="sc-crrsfI VqvmA"
   >
     <button
-      class="sc-iBPRYJ cCYCqk"
+      class="sc-dQppl cFOmbd"
       title="Previous Month"
     >
       <svg>
@@ -17,7 +17,7 @@ exports[`Calendar App Given I open the calendar And I am on February, 2021 Then 
       February, 2021
     </h1>
     <button
-      class="sc-iBPRYJ cCYCqk"
+      class="sc-dQppl cFOmbd"
       title="Next Month"
     >
       <svg>
@@ -26,40 +26,40 @@ exports[`Calendar App Given I open the calendar And I am on February, 2021 Then 
     </button>
   </div>
   <div
-    class="sc-eCssSg kGXomB"
+    class="sc-kEjbxe ceTEMk"
   >
     <h2
-      class="sc-jSgupP eSjFan"
+      class="sc-iqHYGH UjLSq"
     >
       Sunday
     </h2>
     <h2
-      class="sc-jSgupP eSjFan"
+      class="sc-iqHYGH UjLSq"
     >
       Monday
     </h2>
     <h2
-      class="sc-jSgupP eSjFan"
+      class="sc-iqHYGH UjLSq"
     >
       Tuesday
     </h2>
     <h2
-      class="sc-jSgupP eSjFan"
+      class="sc-iqHYGH UjLSq"
     >
       Wednesday
     </h2>
     <h2
-      class="sc-jSgupP eSjFan"
+      class="sc-iqHYGH UjLSq"
     >
       Thursday
     </h2>
     <h2
-      class="sc-jSgupP eSjFan"
+      class="sc-iqHYGH UjLSq"
     >
       Friday
     </h2>
     <h2
-      class="sc-jSgupP eSjFan"
+      class="sc-iqHYGH UjLSq"
     >
       Saturday
     </h2>
