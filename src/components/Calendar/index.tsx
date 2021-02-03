@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-boolean-value */
+import { useSelector } from 'react-redux';
 import addDays from 'date-fns/addDays';
 import endOfMonth from 'date-fns/endOfMonth';
 import endOfWeek from 'date-fns/endOfWeek';
@@ -7,6 +7,7 @@ import subDays from 'date-fns/subDays';
 import startOfMonth from 'date-fns/startOfMonth';
 import startOfWeek from 'date-fns/startOfWeek';
 import Day from '../Day';
+import { selectors } from '../../reducers';
 import { CalendarGrid } from './styles';
 
 const isWeekend = (date: Date): boolean =>
@@ -49,7 +50,7 @@ const getDaysOfMonth = (firstDay: Date, lastDay: Date): Array<Date> => {
 };
 
 const Calendar = (): JSX.Element => {
-  const date = new Date();
+  const date = useSelector(selectors.getCurrentDate);
   const firstDayOfTheMonth = startOfMonth(date);
   const endDayOfTheMonth = endOfMonth(date);
 

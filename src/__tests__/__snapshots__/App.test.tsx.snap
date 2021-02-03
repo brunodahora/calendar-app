@@ -3,11 +3,27 @@
 exports[`Calendar App Given I open the calendar And I am on February, 2021 Then I should see the complete calendar 1`] = `
 <header>
   <div
-    class="sc-gKsewC jmmwzU"
+    class="sc-gKsewC eHKeZp"
   >
+    <button
+      class="sc-iBPRYJ cCYCqk"
+      title="Previous Month"
+    >
+      <svg>
+        navigate_before.svg
+      </svg>
+    </button>
     <h1>
       February, 2021
     </h1>
+    <button
+      class="sc-iBPRYJ cCYCqk"
+      title="Next Month"
+    >
+      <svg>
+        navigate_next.svg
+      </svg>
+    </button>
   </div>
   <div
     class="sc-eCssSg kGXomB"

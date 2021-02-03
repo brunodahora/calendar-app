@@ -42,15 +42,11 @@ describe('Calendar App', () => {
 
       describe('When I click in the previous month button', () => {
         beforeEach(() => {
-          fireEvent.click(screen.getByAltText('Previous Month'));
+          fireEvent.click(screen.getByRole('button', { name: /previous/i }));
         });
 
-        test('Then I should see the current month and year', () => {
+        test('Then I should see the month of january', () => {
           expect(screen.getByText('January, 2021')).toBeInTheDocument();
-        });
-
-        test('Then I should see all days from january and the completing days from previous and next months', () => {
-          render(<App />);
           expect(screen.queryAllByText('27')).toHaveLength(2);
           expect(screen.getByText('10')).toBeInTheDocument();
           expect(screen.queryAllByText('6')).toHaveLength(2);
