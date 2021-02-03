@@ -1,7 +1,6 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import App from '../App';
-
-jest.mock('date-fns', () => ({ today: jest.fn() }));
 
 describe('Calendar App', () => {
   describe('Given I open the calendar', () => {
@@ -42,7 +41,7 @@ describe('Calendar App', () => {
 
       describe('When I click in the previous month button', () => {
         beforeEach(() => {
-          fireEvent.click(screen.getByRole('button', { name: /previous/i }));
+          userEvent.click(screen.getByRole('button', { name: /previous/i }));
         });
 
         test('Then I should see the month of january', () => {
@@ -50,6 +49,20 @@ describe('Calendar App', () => {
           expect(screen.queryAllByText('27')).toHaveLength(2);
           expect(screen.getByText('10')).toBeInTheDocument();
           expect(screen.queryAllByText('6')).toHaveLength(2);
+        });
+      });
+
+      describe('When I click in the next month button until March', () => {
+        beforeEach(() => {
+          userEvent.click(screen.getByRole('button', { name: /next/i }));
+          userEvent.click(screen.getByRole('button', { name: /next/i }));
+        });
+
+        test('Then I should see the month of march', () => {
+          expect(screen.getByText('March, 2021')).toBeInTheDocument();
+          expect(screen.queryAllByText('28')).toHaveLength(2);
+          expect(screen.getByText('10')).toBeInTheDocument();
+          expect(screen.queryAllByText('2')).toHaveLength(2);
         });
       });
     });
