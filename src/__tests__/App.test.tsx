@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 
@@ -12,6 +12,11 @@ describe('Calendar App', () => {
 
       beforeEach(() => {
         render(<App />);
+      });
+
+      test('Then I should see the complete calendar', () => {
+        const { container } = render(<App />);
+        expect(container.firstChild).toMatchSnapshot();
       });
 
       test('Then I should see the current month and year', () => {
@@ -32,11 +37,6 @@ describe('Calendar App', () => {
         expect(screen.getByText('31')).toBeInTheDocument();
         expect(screen.getByText('10')).toBeInTheDocument();
         expect(screen.queryAllByText('6')).toHaveLength(2);
-      });
-
-      test('Then I should see the complete calendar', () => {
-        const { container } = render(<App />);
-        expect(container.firstChild).toMatchSnapshot();
       });
 
       describe('When I click in the previous month button', () => {
@@ -63,6 +63,31 @@ describe('Calendar App', () => {
           expect(screen.queryAllByText('28')).toHaveLength(2);
           expect(screen.getByText('10')).toBeInTheDocument();
           expect(screen.queryAllByText('2')).toHaveLength(2);
+        });
+      });
+
+      describe('When I click in the add reminder button at February, 12th', () => {
+        beforeEach(() => {
+          userEvent.click(
+            within(
+              screen.getByTestId(new Date(2021, 1, 2).toISOString())
+            ).getByRole('button', { name: /add reminder/i })
+          );
+        });
+
+        test('Then I should see a dropdown with the information to set the reminder', () => {
+          expect(
+            screen.getByRole('textbox', { name: /reminder/i })
+          ).toBeInTheDocument();
+          expect(
+            screen.getByRole('textbox', { name: /time/i })
+          ).toBeInTheDocument();
+          expect(
+            screen.getByRole('textbox', { name: /city/i })
+          ).toBeInTheDocument();
+          expect(
+            screen.getByRole('textbox', { name: /color/i })
+          ).toBeInTheDocument();
         });
       });
     });
