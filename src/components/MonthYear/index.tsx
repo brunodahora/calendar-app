@@ -11,6 +11,7 @@ const MonthYearContainer = styled.div`
   flex: 1;
   flex-direction: row;
   justify-content: space-between;
+  height: 80px;
 `;
 
 const ArrowButton = styled.button`

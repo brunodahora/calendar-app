@@ -5,6 +5,7 @@ export const DaysOfTheWeekContainer = styled.div`
   border: 1px solid #666666;
   display: flex;
   flex-direction: row;
+  height: 24px;
 `;
 
 export const DayOfTheWeek = styled.h2`
@@ -14,5 +15,4 @@ export const DayOfTheWeek = styled.h2`
   flex: 1;
   font-size: 14px;
   justify-content: center;
-  margin: 4px;
 `;

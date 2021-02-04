@@ -13,6 +13,7 @@ import {
   IconButton,
 } from './styles';
 import ReminderDropdown from './ReminderDropdown';
+import ReminderList from './ReminderList';
 
 type Props = {
   id: string;
@@ -67,6 +68,7 @@ const Day = ({
             {showReminderDropdown && (
               <OutsideClickHandler onOutsideClick={closeReminderDropdown}>
                 <ReminderDropdown
+                  id={id}
                   closeReminderDropdown={closeReminderDropdown}
                 />
               </OutsideClickHandler>
@@ -74,6 +76,7 @@ const Day = ({
           </div>
         </Portal>
       </DayHeader>
+      <ReminderList id={id} />
       <DayFillSpace />
     </DayContainer>
   );

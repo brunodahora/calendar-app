@@ -1,4 +1,5 @@
 import { useState, ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   ReminderDropdownContainer,
   ReminderLabel,
@@ -6,24 +7,28 @@ import {
   ReminderFooter,
   ReminderButton,
 } from './styles';
+import { actions, ReminderType } from '../../../reducers';
 
 type Props = {
-  reminder?: {
-    description: string;
-    color: string;
-    time: string;
-    city: string;
-  };
+  id: string;
+  reminder?: ReminderType;
   closeReminderDropdown: () => void;
 };
 
+const getTimeString = (time: number): string =>
+  `${time.toString().substring(0, 2)}:${time.toString().substring(2)}`;
+
 const ReminderDropdown = ({
+  id,
   reminder,
   closeReminderDropdown,
 }: Props): JSX.Element => {
+  const dispatch = useDispatch();
   const [description, setDescription] = useState(reminder?.description || '');
   const [color, setColor] = useState(reminder?.color || '');
-  const [time, setTime] = useState(reminder?.time || '');
+  const [time, setTime] = useState(
+    reminder?.time ? getTimeString(reminder.time) : ''
+  );
   const [city, setCity] = useState(reminder?.city || '');
 
   const onChange = (setter: (value: string) => void) => (
@@ -40,6 +45,17 @@ const ReminderDropdown = ({
     }
     if (errors) alert(errors);
     else {
+      dispatch(
+        actions.reminders.addReminder({
+          date: id,
+          reminder: {
+            description,
+            color,
+            time: parseInt(time.replace(/\D/, ''), 10),
+            city,
+          },
+        })
+      );
       alert('Reminder created');
       closeReminderDropdown();
     }

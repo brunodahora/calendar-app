@@ -48,6 +48,7 @@ export const IconButton = styled.button`
 
 export const DayNumber = styled.span<DayNumberProps>`
   color: ${(props) => getDayColor(props)};
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 24px;
   font-weight: bold;
 `;
