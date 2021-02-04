@@ -90,6 +90,13 @@ describe('Calendar App', () => {
             screen.getByRole('textbox', { name: /color/i })
           ).toBeInTheDocument();
         });
+
+        test('Then I should see the save button disabled', () => {
+          expect(
+            screen.getByRole('button', { name: /save/i })
+          ).toBeInTheDocument();
+          expect(screen.getByRole('button', { name: /save/i })).toBeDisabled();
+        });
       });
     });
   });
