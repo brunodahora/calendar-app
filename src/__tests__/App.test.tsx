@@ -176,26 +176,51 @@ describe('Calendar App', () => {
             );
           });
 
-          test('When I click in save, Then I should see the reminder in the correct date', () => {
-            jest.spyOn(window, 'alert');
-            userEvent.click(screen.getByRole('button', { name: /save/i }));
-            expect(window.alert).toHaveBeenCalledWith('Reminder created');
-            expect(
-              within(
-                screen.getByTestId(new Date(2021, 2, 12).toISOString())
-              ).getByText('20:00')
-            ).toBeInTheDocument();
-            expect(
-              within(
-                screen.getByTestId(new Date(2021, 2, 12).toISOString())
-              ).getByText('Remind me of something')
-            ).toBeInTheDocument();
-            expect(
-              within(
-                screen.getByTestId(new Date(2021, 2, 12).toISOString())
-              ).getByTestId('reminder-color')
-            ).toHaveStyle({ 'background-color': '#000000' });
+          describe('When I click in save', () => {
+            beforeEach(() => {
+              jest.spyOn(window, 'alert');
+              userEvent.click(screen.getByRole('button', { name: /save/i }));
+            });
+
+            test('Then I should see the reminder in the correct date', () => {
+              expect(window.alert).toHaveBeenCalledWith('Reminder created');
+              expect(
+                within(
+                  screen.getByTestId(new Date(2021, 2, 12).toISOString())
+                ).getByText('20:00')
+              ).toBeInTheDocument();
+              expect(
+                within(
+                  screen.getByTestId(new Date(2021, 2, 12).toISOString())
+                ).getByText('Remind me of something')
+              ).toBeInTheDocument();
+              expect(
+                within(
+                  screen.getByTestId(new Date(2021, 2, 12).toISOString())
+                ).getByTestId('reminder-color')
+              ).toHaveStyle({ 'background-color': '#000000' });
+            });
           });
+        });
+      });
+
+      describe('When I click in the delete all reminders button at March, 12th', () => {
+        beforeEach(() => {
+          jest.spyOn(window, 'alert');
+          userEvent.click(
+            within(
+              screen.getByTestId(new Date(2021, 2, 12).toISOString())
+            ).getByRole('button', { name: /delete all reminder/i })
+          );
+        });
+
+        test('Then I should not see any reminder in this day', () => {
+          expect(
+            within(
+              screen.getByTestId(new Date(2021, 2, 12).toISOString())
+            ).queryByTestId('reminder-color')
+          ).not.toBeInTheDocument();
+          expect(window.alert).toHaveBeenCalledWith('All reminders deleted');
         });
       });
     });
