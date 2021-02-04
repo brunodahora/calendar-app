@@ -99,7 +99,7 @@ describe('Calendar App', () => {
           expect(screen.getByRole('button', { name: /save/i })).toBeDisabled();
         });
 
-        describe('When I fill all data with wrong time', () => {
+        describe('And I fill all data with wrong time', () => {
           beforeEach(() => {
             userEvent.type(
               screen.getByRole('textbox', { name: /description/i }),
@@ -119,16 +119,21 @@ describe('Calendar App', () => {
             );
           });
 
-          test('When I click in save, Then I should see an alert with an error about time', () => {
-            jest.spyOn(window, 'alert');
-            userEvent.click(screen.getByRole('button', { name: /save/i }));
-            expect(window.alert).toHaveBeenCalledWith(
-              '\nTime must be of format HH:mm'
-            );
+          describe('And I click in save', () => {
+            beforeEach(() => {
+              jest.spyOn(window, 'alert');
+              userEvent.click(screen.getByRole('button', { name: /save/i }));
+            });
+
+            test('Then I should see an alert with an error about time', () => {
+              expect(window.alert).toHaveBeenCalledWith(
+                '\nTime must be of format HH:mm'
+              );
+            });
           });
         });
 
-        describe('When I fill all data with wrong color', () => {
+        describe('And I fill all data with wrong color', () => {
           beforeEach(() => {
             userEvent.type(
               screen.getByRole('textbox', { name: /description/i }),
@@ -148,16 +153,21 @@ describe('Calendar App', () => {
             );
           });
 
-          test('When I click in save, Then I should see an alert with an error about time', () => {
-            jest.spyOn(window, 'alert');
-            userEvent.click(screen.getByRole('button', { name: /save/i }));
-            expect(window.alert).toHaveBeenCalledWith(
-              '\nColor must be a valid Hex value'
-            );
+          describe('And I click in save', () => {
+            beforeEach(() => {
+              jest.spyOn(window, 'alert');
+              userEvent.click(screen.getByRole('button', { name: /save/i }));
+            });
+
+            test('Then I should see an alert with an error about time', () => {
+              expect(window.alert).toHaveBeenCalledWith(
+                '\nColor must be a valid Hex value'
+              );
+            });
           });
         });
 
-        describe('When I fill all data with correct information', () => {
+        describe('And I fill all data with correct information', () => {
           beforeEach(() => {
             userEvent.type(
               screen.getByRole('textbox', { name: /description/i }),
@@ -177,7 +187,7 @@ describe('Calendar App', () => {
             );
           });
 
-          describe('When I click in save', () => {
+          describe('And I click in save', () => {
             beforeEach(() => {
               jest.spyOn(window, 'alert');
               userEvent.click(screen.getByRole('button', { name: /save/i }));
@@ -279,6 +289,20 @@ describe('Calendar App', () => {
                 name: /color/i,
               })
             ).toHaveValue('#FF0000');
+          });
+
+          describe('And I click in delete', () => {
+            beforeEach(() => {
+              jest.spyOn(window, 'alert');
+              userEvent.click(screen.getByRole('button', { name: /delete/i }));
+            });
+
+            test('Then I should not see the reminder anymore', () => {
+              expect(window.alert).toHaveBeenCalledWith('Reminder deleted');
+              expect(
+                screen.queryByText('Remind me of something again')
+              ).not.toBeInTheDocument();
+            });
           });
         });
       });
