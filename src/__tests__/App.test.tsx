@@ -1,5 +1,5 @@
-import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { render, screen, waitFor, within } from '../test-utils';
 import App from '../App';
 
 describe('Calendar App', () => {
@@ -52,9 +52,8 @@ describe('Calendar App', () => {
         });
       });
 
-      describe('When I click in the next month button until March', () => {
+      describe('When I click in the next month button', () => {
         beforeEach(() => {
-          userEvent.click(screen.getByRole('button', { name: /next/i }));
           userEvent.click(screen.getByRole('button', { name: /next/i }));
         });
 
@@ -66,11 +65,11 @@ describe('Calendar App', () => {
         });
       });
 
-      describe('When I click in the add reminder button at March, 12th', () => {
+      describe('When I click in the add reminder button at February, 12th', () => {
         beforeEach(async () => {
           userEvent.click(
             within(
-              screen.getByTestId(new Date(2021, 2, 12).toISOString())
+              screen.getByTestId(new Date(2021, 1, 12).toISOString())
             ).getByRole('button', { name: /add reminder/i })
           );
           await waitFor(() => screen.getByText('Add Reminder'));
@@ -197,111 +196,87 @@ describe('Calendar App', () => {
               expect(window.alert).toHaveBeenCalledWith('Reminder created');
               expect(
                 within(
-                  screen.getByTestId(new Date(2021, 2, 12).toISOString())
+                  screen.getByTestId(new Date(2021, 1, 12).toISOString())
                 ).getByText('20:00')
               ).toBeInTheDocument();
               expect(
                 within(
-                  screen.getByTestId(new Date(2021, 2, 12).toISOString())
+                  screen.getByTestId(new Date(2021, 1, 12).toISOString())
                 ).getByText('Remind me of something')
               ).toBeInTheDocument();
               expect(
                 within(
-                  screen.getByTestId(new Date(2021, 2, 12).toISOString())
+                  screen.getByTestId(new Date(2021, 1, 12).toISOString())
                 ).getByTestId('reminder-color')
               ).toHaveStyle({ 'background-color': '#000000' });
             });
-          });
-        });
-      });
 
-      describe('When I click in the delete all reminders button at March, 12th', () => {
-        beforeEach(() => {
-          jest.spyOn(window, 'alert');
-          userEvent.click(
-            within(
-              screen.getByTestId(new Date(2021, 2, 12).toISOString())
-            ).getByRole('button', { name: /delete all reminder/i })
-          );
-        });
+            describe('And I click in the delete all reminders button at February, 12th', () => {
+              beforeEach(() => {
+                jest.spyOn(window, 'alert');
+                userEvent.click(
+                  within(
+                    screen.getByTestId(new Date(2021, 1, 12).toISOString())
+                  ).getByRole('button', { name: /delete all reminder/i })
+                );
+              });
 
-        test('Then I should not see any reminder in this day', () => {
-          expect(
-            within(
-              screen.getByTestId(new Date(2021, 2, 12).toISOString())
-            ).queryByTestId('reminder-color')
-          ).not.toBeInTheDocument();
-          expect(window.alert).toHaveBeenCalledWith('All reminders deleted');
-        });
-      });
-
-      describe('When I added a reminder in March, 12th', () => {
-        beforeEach(async () => {
-          userEvent.click(
-            within(
-              screen.getByTestId(new Date(2021, 2, 12).toISOString())
-            ).getByRole('button', { name: /add reminder/i })
-          );
-          await waitFor(() => screen.getByText('Add Reminder'));
-          userEvent.type(
-            screen.getByRole('textbox', { name: /description/i }),
-            'Remind me of something again'
-          );
-          userEvent.type(
-            screen.getByRole('textbox', { name: /time/i }),
-            '1000'
-          );
-          userEvent.type(
-            screen.getByRole('textbox', { name: /city/i }),
-            'London'
-          );
-          userEvent.type(
-            screen.getByRole('textbox', { name: /color/i }),
-            '#FF0000'
-          );
-          userEvent.click(screen.getByRole('button', { name: /save/i }));
-        });
-
-        describe('And I click in the created reminder', () => {
-          beforeEach(() => {
-            userEvent.click(screen.getByText('Remind me of something again'));
-          });
-
-          test('Then I should see a dropdown with the reminder information', () => {
-            expect(screen.getByText('Edit Reminder')).toBeInTheDocument();
-            expect(
-              screen.getByRole('textbox', {
-                name: /description/i,
-              })
-            ).toHaveValue('Remind me of something again');
-            expect(
-              screen.getByRole('textbox', {
-                name: /time/i,
-              })
-            ).toHaveValue('10:00');
-            expect(
-              screen.getByRole('textbox', {
-                name: /city/i,
-              })
-            ).toHaveValue('London');
-            expect(
-              screen.getByRole('textbox', {
-                name: /color/i,
-              })
-            ).toHaveValue('#FF0000');
-          });
-
-          describe('And I click in delete', () => {
-            beforeEach(() => {
-              jest.spyOn(window, 'alert');
-              userEvent.click(screen.getByRole('button', { name: /delete/i }));
+              test('Then I should not see any reminder in this day', () => {
+                expect(
+                  within(
+                    screen.getByTestId(new Date(2021, 1, 12).toISOString())
+                  ).queryByTestId('reminder-color')
+                ).not.toBeInTheDocument();
+                expect(window.alert).toHaveBeenCalledWith(
+                  'All reminders deleted'
+                );
+              });
             });
 
-            test('Then I should not see the reminder anymore', () => {
-              expect(window.alert).toHaveBeenCalledWith('Reminder deleted');
-              expect(
-                screen.queryByText('Remind me of something again')
-              ).not.toBeInTheDocument();
+            describe('And I click in the created reminder', () => {
+              beforeEach(() => {
+                userEvent.click(screen.getByText('Remind me of something'));
+              });
+
+              test('Then I should see a dropdown with the reminder information', () => {
+                expect(screen.getByText('Edit Reminder')).toBeInTheDocument();
+                expect(
+                  screen.getByRole('textbox', {
+                    name: /description/i,
+                  })
+                ).toHaveValue('Remind me of something');
+                expect(
+                  screen.getByRole('textbox', {
+                    name: /time/i,
+                  })
+                ).toHaveValue('20:00');
+                expect(
+                  screen.getByRole('textbox', {
+                    name: /city/i,
+                  })
+                ).toHaveValue('Curitiba');
+                expect(
+                  screen.getByRole('textbox', {
+                    name: /color/i,
+                  })
+                ).toHaveValue('#000000');
+              });
+
+              describe('And I click in delete', () => {
+                beforeEach(() => {
+                  jest.spyOn(window, 'alert');
+                  userEvent.click(
+                    screen.getByRole('button', { name: /^delete$/i })
+                  );
+                });
+
+                test('Then I should not see the reminder anymore', () => {
+                  expect(window.alert).toHaveBeenCalledWith('Reminder deleted');
+                  expect(
+                    screen.queryByText('Remind me of something')
+                  ).not.toBeInTheDocument();
+                });
+              });
             });
           });
         });
