@@ -32,23 +32,11 @@ const ReminderDropdown = ({
 
   const onSave = () => {
     let errors = '';
-    if (!description) {
-      errors += '\nDescription cannot be empty';
-    }
-    if (!time) {
-      errors += '\nTime cannot be empty';
-    }
     if (time && !/^([01][0-9])|(2[03]):?\d{2}/.test(time)) {
       errors += '\nTime must be of format HH:mm';
     }
-    if (!color) {
-      errors += '\nColor cannot be empty';
-    }
     if (color && !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {
       errors += '\nColor must be a valid Hex value';
-    }
-    if (!city) {
-      errors += '\nCity cannot be empty';
     }
     if (errors) alert(errors);
     else {
@@ -56,6 +44,8 @@ const ReminderDropdown = ({
       closeReminderDropdown();
     }
   };
+
+  const isDisabled = !description || !time || !color || !city;
 
   return (
     <ReminderDropdownContainer>
@@ -98,7 +88,12 @@ const ReminderDropdown = ({
             Delete
           </ReminderButton>
         )}
-        <ReminderButton title="Save" color="navy" onClick={onSave}>
+        <ReminderButton
+          title="Save"
+          color="navy"
+          onClick={onSave}
+          disabled={isDisabled}
+        >
           Save
         </ReminderButton>
       </ReminderFooter>
