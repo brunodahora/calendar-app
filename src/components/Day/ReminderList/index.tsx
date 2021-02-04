@@ -1,15 +1,9 @@
 import { useSelector } from 'react-redux';
-import styled from 'styled-components';
 import { selectors, ReminderType } from '../../../reducers';
 import Reminder from './Reminder';
+import { ReminderListContainer } from './styles';
 
 type Props = { id: string };
-
-const ReminderListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-`;
 
 const ReminderList = ({ id }: Props): JSX.Element => {
   const reminders = useSelector(selectors.getReminders(id));
@@ -17,7 +11,12 @@ const ReminderList = ({ id }: Props): JSX.Element => {
     <ReminderListContainer>
       {reminders &&
         reminders.map((reminder: ReminderType, index) => (
-          <Reminder key={`${id}-${index}`} index={index} {...reminder} />
+          <Reminder
+            key={`${id}-${index}`}
+            index={index}
+            id={id}
+            reminder={reminder}
+          />
         ))}
     </ReminderListContainer>
   );

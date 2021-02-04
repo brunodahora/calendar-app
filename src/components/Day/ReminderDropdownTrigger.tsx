@@ -7,14 +7,19 @@ import OutsideClickHandler from 'react-outside-click-handler';
 import ReminderDropdown from './ReminderDropdown';
 import { ReminderType } from '../../reducers';
 
-const InvisibleButton = styled.button`
-  align-items: center;
+type InvisibleButtonProps = { centralize: boolean };
+
+const InvisibleButton = styled.button<InvisibleButtonProps>`
   background-color: transparent;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
-  justify-content: center;
+  ${({ centralize }) =>
+    !centralize
+      ? ''
+      : `align-items: center;
+        justify-content: center;`}
 
   :active {
     background-color: steelblue;
@@ -26,6 +31,8 @@ type Props = {
   id: string;
   title: string;
   reminder?: ReminderType;
+  index?: number;
+  centralize?: boolean;
 };
 
 const ReminderDropdownTrigger = ({
@@ -33,6 +40,8 @@ const ReminderDropdownTrigger = ({
   id,
   title,
   reminder,
+  index,
+  centralize = false,
 }: Props): JSX.Element => {
   const referenceElement = useRef(null);
   const popperElement = useRef(null);
@@ -55,6 +64,7 @@ const ReminderDropdownTrigger = ({
         title={title}
         onClick={openReminderDropdown}
         ref={referenceElement}
+        centralize={centralize}
       >
         {children}
       </InvisibleButton>
@@ -66,6 +76,7 @@ const ReminderDropdownTrigger = ({
                 id={id}
                 closeReminderDropdown={closeReminderDropdown}
                 reminder={reminder}
+                index={index}
               />
             </OutsideClickHandler>
           )}

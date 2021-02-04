@@ -13,6 +13,7 @@ import { actions, ReminderType } from '../../../reducers';
 type Props = {
   id: string;
   reminder?: ReminderType;
+  index?: number;
   closeReminderDropdown: () => void;
 };
 
@@ -22,6 +23,7 @@ const getTimeString = (time: number): string =>
 const ReminderDropdown = ({
   id,
   reminder,
+  index,
   closeReminderDropdown,
 }: Props): JSX.Element => {
   const dispatch = useDispatch();
@@ -60,6 +62,11 @@ const ReminderDropdown = ({
       alert('Reminder created');
       closeReminderDropdown();
     }
+  };
+
+  const onDelete = () => {
+    alert('Reminder deleted');
+    closeReminderDropdown();
   };
 
   const isDisabled = !description || !time || !color || !city;
@@ -101,7 +108,7 @@ const ReminderDropdown = ({
       />
       <ReminderFooter>
         {reminder && (
-          <ReminderButton title="Delete" color="red">
+          <ReminderButton title="Delete" color="red" onClick={onDelete}>
             Delete
           </ReminderButton>
         )}

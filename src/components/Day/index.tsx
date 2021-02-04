@@ -40,7 +40,7 @@ const Day = ({
           {day}
         </DayNumber>
         <DayFillSpace />
-        <ReminderDropdownTrigger title="Add reminder" id={id}>
+        <ReminderDropdownTrigger title="Add reminder" id={id} centralize>
           <Add />
         </ReminderDropdownTrigger>
         {hasReminders && (
