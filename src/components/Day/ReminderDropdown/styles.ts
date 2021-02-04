@@ -14,6 +14,11 @@ export const ReminderDropdownContainer = styled.div`
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
 `;
 
+export const ReminderHeader = styled.h3`
+  margin-block-start: 0;
+  margin-block-end: 16px;
+`;
+
 export const ReminderLabel = styled.label`
   font-size: 16px;
   font-weight: bold;

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key, react/jsx-props-no-spreading */
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { selectors, ReminderType } from '../../../reducers';

@@ -6,6 +6,7 @@ import {
   ReminderInput,
   ReminderFooter,
   ReminderButton,
+  ReminderHeader,
 } from './styles';
 import { actions, ReminderType } from '../../../reducers';
 
@@ -65,7 +66,7 @@ const ReminderDropdown = ({
 
   return (
     <ReminderDropdownContainer>
-      <h3>{reminder ? 'Edit' : 'Add'} Reminder</h3>
+      <ReminderHeader>{reminder ? 'Edit' : 'Add'} Reminder</ReminderHeader>
       <ReminderLabel htmlFor="description">Description</ReminderLabel>
       <ReminderInput
         type="text"
