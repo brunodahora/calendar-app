@@ -2,6 +2,7 @@
 import { useRef, useState } from 'react';
 import { Portal } from 'react-portal';
 import { usePopper } from 'react-popper';
+import { useDispatch, useSelector } from 'react-redux';
 import OutsideClickHandler from 'react-outside-click-handler';
 import { ReactComponent as Add } from '../../assets/add.svg';
 import { ReactComponent as DeleteSweep } from '../../assets/delete_sweep.svg';
@@ -14,6 +15,7 @@ import {
 } from './styles';
 import ReminderDropdown from './ReminderDropdown';
 import ReminderList from './ReminderList';
+import { actions, selectors } from '../../reducers';
 
 type Props = {
   id: string;
@@ -28,6 +30,8 @@ const Day = ({
   isWeekend,
   isCurrentMonth = false,
 }: Props): JSX.Element => {
+  const dispatch = useDispatch();
+  const hasReminders = useSelector(selectors.hasReminders(id));
   const referenceElement = useRef(null);
   const popperElement = useRef(null);
   const [showReminderDropdown, setShowReminderDropdown] = useState(false);
@@ -43,6 +47,11 @@ const Day = ({
   const openReminderDropdown = () => setShowReminderDropdown(true);
   const closeReminderDropdown = () => setShowReminderDropdown(false);
 
+  const deleteAllReminders = () => {
+    dispatch(actions.reminders.deleteAll(id));
+    alert('All reminders deleted');
+  };
+
   return (
     <DayContainer data-testid={id} isWeekend={isWeekend}>
       <DayHeader>
@@ -57,12 +66,11 @@ const Day = ({
         >
           <Add />
         </IconButton>
-        <IconButton
-          title="Delete all reminder"
-          onClick={() => console.log('delete_sweep')}
-        >
-          <DeleteSweep />
-        </IconButton>
+        {hasReminders && (
+          <IconButton title="Delete all reminder" onClick={deleteAllReminders}>
+            <DeleteSweep />
+          </IconButton>
+        )}
         <Portal>
           <div ref={popperElement} style={styles.popper} {...attributes.popper}>
             {showReminderDropdown && (

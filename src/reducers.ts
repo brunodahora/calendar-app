@@ -35,7 +35,7 @@ const remindersSlice: Slice<ReminderSliceState> = createSlice({
   name: 'reminders',
   initialState: {} as ReminderSliceState,
   reducers: {
-    addReminder: (
+    add: (
       state,
       action: PayloadAction<{ date: string; reminder: ReminderType }, string>
     ) => {
@@ -51,11 +51,14 @@ const remindersSlice: Slice<ReminderSliceState> = createSlice({
       };
       return newState;
     },
-    deleteReminder: (state, action) => {
+    delete: (state, action) => {
       console.log(action);
     },
-    deleteAllReminders: (state, action) => {
-      console.log(action);
+    deleteAll: (state, action: PayloadAction<string, string>) => {
+      return {
+        ...state,
+        [action.payload]: [],
+      };
     },
   },
 });
@@ -77,4 +80,6 @@ export const selectors = {
   getReminders: (date: string) => (
     state: RootState
   ): Array<ReminderType> | null => state.reminders[date],
+  hasReminders: (date: string) => (state: RootState): boolean =>
+    !!state.reminders[date] && state.reminders[date].length > 0,
 };

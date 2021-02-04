@@ -46,7 +46,7 @@ const ReminderDropdown = ({
     if (errors) alert(errors);
     else {
       dispatch(
-        actions.reminders.addReminder({
+        actions.reminders.add({
           date: id,
           reminder: {
             description,
