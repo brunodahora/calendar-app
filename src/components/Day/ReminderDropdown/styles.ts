@@ -4,6 +4,7 @@ type ReminderButtonProps = { color: string };
 
 export const ReminderDropdownContainer = styled.div`
   background-color: white;
+  border: 1px solid #666666;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -46,6 +47,12 @@ export const ReminderButton = styled.button<ReminderButtonProps>`
   & + & {
     margin-left: 8px;
   }
+
+  :disabled {
+    color: #666666;
+    background-color: #e6e6e6;
+    cursor: not-allowed;
+  }
 `;
 
 export const ReminderFooter = styled.div`
@@ -54,9 +61,4 @@ export const ReminderFooter = styled.div`
   align-items: center;
   justify-content: flex-end;
   color: white;
-
-  :disabled {
-    color: #666666;
-    background-color: E6E6E6;
-  }
 `;

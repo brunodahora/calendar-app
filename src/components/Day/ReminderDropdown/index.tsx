@@ -32,7 +32,7 @@ const ReminderDropdown = ({
 
   const onSave = () => {
     let errors = '';
-    if (time && !/^([01][0-9])|(2[03]):?\d{2}/.test(time)) {
+    if (time && !/^(0[0-9]|1[0-9]|2[0-3]):?[0-5][0-9]$/.test(time)) {
       errors += '\nTime must be of format HH:mm';
     }
     if (color && !/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(color)) {

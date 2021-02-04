@@ -97,6 +97,91 @@ describe('Calendar App', () => {
           ).toBeInTheDocument();
           expect(screen.getByRole('button', { name: /save/i })).toBeDisabled();
         });
+
+        describe('When I fill all data with wrong time', () => {
+          beforeEach(() => {
+            userEvent.type(
+              screen.getByRole('textbox', { name: /description/i }),
+              'Remind me of something'
+            );
+            userEvent.type(
+              screen.getByRole('textbox', { name: /time/i }),
+              '20000'
+            );
+            userEvent.type(
+              screen.getByRole('textbox', { name: /city/i }),
+              'Curitiba'
+            );
+            userEvent.type(
+              screen.getByRole('textbox', { name: /color/i }),
+              '#000000'
+            );
+          });
+
+          test('When I click in save, Then I should see an alert with an error about time', () => {
+            jest.spyOn(window, 'alert');
+            userEvent.click(screen.getByRole('button', { name: /save/i }));
+            expect(window.alert).toHaveBeenCalledWith(
+              '\nTime must be of format HH:mm'
+            );
+          });
+        });
+
+        describe('When I fill all data with wrong color', () => {
+          beforeEach(() => {
+            userEvent.type(
+              screen.getByRole('textbox', { name: /description/i }),
+              'Remind me of something'
+            );
+            userEvent.type(
+              screen.getByRole('textbox', { name: /time/i }),
+              '2000'
+            );
+            userEvent.type(
+              screen.getByRole('textbox', { name: /city/i }),
+              'Curitiba'
+            );
+            userEvent.type(
+              screen.getByRole('textbox', { name: /color/i }),
+              '000'
+            );
+          });
+
+          test('When I click in save, Then I should see an alert with an error about time', () => {
+            jest.spyOn(window, 'alert');
+            userEvent.click(screen.getByRole('button', { name: /save/i }));
+            expect(window.alert).toHaveBeenCalledWith(
+              '\nColor must be a valid Hex value'
+            );
+          });
+        });
+
+        describe('When I fill all data with correct information', () => {
+          beforeEach(() => {
+            userEvent.type(
+              screen.getByRole('textbox', { name: /description/i }),
+              'Remind me of something'
+            );
+            userEvent.type(
+              screen.getByRole('textbox', { name: /time/i }),
+              '2000'
+            );
+            userEvent.type(
+              screen.getByRole('textbox', { name: /city/i }),
+              'Curitiba'
+            );
+            userEvent.type(
+              screen.getByRole('textbox', { name: /color/i }),
+              '#000000'
+            );
+          });
+
+          test('When I click in save, Then I should see the reminder in the correct date', () => {
+            jest.spyOn(window, 'alert');
+            userEvent.click(screen.getByRole('button', { name: /save/i }));
+            expect(window.alert).toHaveBeenCalledWith('Reminder created');
+          });
+        });
       });
     });
   });
