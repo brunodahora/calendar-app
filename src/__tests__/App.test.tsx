@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 
@@ -67,12 +67,13 @@ describe('Calendar App', () => {
       });
 
       describe('When I click in the add reminder button at March, 12th', () => {
-        beforeEach(() => {
+        beforeEach(async () => {
           userEvent.click(
             within(
               screen.getByTestId(new Date(2021, 2, 12).toISOString())
             ).getByRole('button', { name: /add reminder/i })
           );
+          await waitFor(() => screen.getByText('Add Reminder'));
         });
 
         test('Then I should see a dropdown with the information to set the reminder', () => {
@@ -221,6 +222,64 @@ describe('Calendar App', () => {
             ).queryByTestId('reminder-color')
           ).not.toBeInTheDocument();
           expect(window.alert).toHaveBeenCalledWith('All reminders deleted');
+        });
+      });
+
+      describe('When I added a reminder in March, 12th', () => {
+        beforeEach(async () => {
+          userEvent.click(
+            within(
+              screen.getByTestId(new Date(2021, 2, 12).toISOString())
+            ).getByRole('button', { name: /add reminder/i })
+          );
+          await waitFor(() => screen.getByText('Add Reminder'));
+          userEvent.type(
+            screen.getByRole('textbox', { name: /description/i }),
+            'Remind me of something again'
+          );
+          userEvent.type(
+            screen.getByRole('textbox', { name: /time/i }),
+            '1000'
+          );
+          userEvent.type(
+            screen.getByRole('textbox', { name: /city/i }),
+            'London'
+          );
+          userEvent.type(
+            screen.getByRole('textbox', { name: /color/i }),
+            '#FF0000'
+          );
+          userEvent.click(screen.getByRole('button', { name: /save/i }));
+        });
+
+        describe('And I click in the created reminder', () => {
+          beforeEach(() => {
+            userEvent.click(screen.getByText('Remind me of something again'));
+          });
+
+          test('Then I should see a dropdown with the reminder information', () => {
+            expect(screen.getByText('Edit Reminder')).toBeInTheDocument();
+            expect(
+              screen.getByRole('textbox', {
+                name: /description/i,
+              })
+            ).toHaveValue('Remind me of something again');
+            expect(
+              screen.getByRole('textbox', {
+                name: /time/i,
+              })
+            ).toHaveValue('10:00');
+            expect(
+              screen.getByRole('textbox', {
+                name: /city/i,
+              })
+            ).toHaveValue('London');
+            expect(
+              screen.getByRole('textbox', {
+                name: /color/i,
+              })
+            ).toHaveValue('#FF0000');
+          });
         });
       });
     });
