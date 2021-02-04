@@ -51,8 +51,17 @@ const remindersSlice: Slice<ReminderSliceState> = createSlice({
       };
       return newState;
     },
-    delete: (state, action) => {
-      console.log(action);
+    delete: (
+      state,
+      action: PayloadAction<{ date: string; index: number }, string>
+    ) => {
+      const {
+        payload: { date, index },
+      } = action;
+      return {
+        ...state,
+        [date]: state[date].filter((_, i) => index !== i),
+      };
     },
     deleteAll: (state, action: PayloadAction<string, string>) => {
       return {

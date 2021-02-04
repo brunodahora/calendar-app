@@ -65,6 +65,7 @@ const ReminderDropdown = ({
   };
 
   const onDelete = () => {
+    dispatch(actions.reminders.delete({ date: id, index }));
     alert('Reminder deleted');
     closeReminderDropdown();
   };
