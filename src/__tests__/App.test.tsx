@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor, within } from '../test-utils';
 import App from '../App';
@@ -234,8 +235,25 @@ describe('Calendar App', () => {
               });
             });
 
-            describe('And I click in the created reminder', () => {
+            describe('And I click in the created reminder and the Weather API returns ok', () => {
               beforeEach(() => {
+                jest.clearAllMocks();
+                const mockedFetch = jest.spyOn(window, 'fetch');
+                // @ts-ignore
+                mockedFetch.mockResolvedValueOnce({
+                  ok: true,
+                  json: jest.fn().mockResolvedValue({
+                    weather: [
+                      {
+                        id: 803,
+                        main: 'Clouds',
+                        description: 'broken clouds',
+                        icon: '04n',
+                      },
+                    ],
+                  }),
+                });
+
                 userEvent.click(screen.getByText('Remind me of something'));
               });
 
@@ -263,6 +281,10 @@ describe('Calendar App', () => {
                 ).toHaveValue('#000000');
               });
 
+              test('Then I should see the weather information for the city', async () => {
+                expect(await screen.findByText(/clouds/i)).toBeInTheDocument();
+              });
+
               describe('And I click in delete', () => {
                 beforeEach(() => {
                   userEvent.click(
@@ -280,7 +302,6 @@ describe('Calendar App', () => {
 
               describe('And I update the description and save', () => {
                 beforeEach(() => {
-                  jest.clearAllMocks();
                   userEvent.type(
                     screen.getByRole('textbox', { name: /description/i }),
                     ' edited'
