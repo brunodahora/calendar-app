@@ -6,12 +6,17 @@ describe('Calendar App', () => {
   describe('Given I open the calendar', () => {
     describe('And I am on February, 2021', () => {
       beforeAll(() => {
+        jest.spyOn(window, 'alert');
         jest.useFakeTimers('modern');
         jest.setSystemTime(new Date(2021, 1, 2));
       });
 
       beforeEach(() => {
         render(<App />);
+      });
+
+      afterEach(() => {
+        jest.clearAllMocks();
       });
 
       test('Then I should see the complete calendar', () => {
@@ -120,7 +125,6 @@ describe('Calendar App', () => {
 
           describe('And I click in save', () => {
             beforeEach(() => {
-              jest.spyOn(window, 'alert');
               userEvent.click(screen.getByRole('button', { name: /save/i }));
             });
 
@@ -154,7 +158,6 @@ describe('Calendar App', () => {
 
           describe('And I click in save', () => {
             beforeEach(() => {
-              jest.spyOn(window, 'alert');
               userEvent.click(screen.getByRole('button', { name: /save/i }));
             });
 
@@ -188,7 +191,6 @@ describe('Calendar App', () => {
 
           describe('And I click in save', () => {
             beforeEach(() => {
-              jest.spyOn(window, 'alert');
               userEvent.click(screen.getByRole('button', { name: /save/i }));
             });
 
@@ -213,7 +215,6 @@ describe('Calendar App', () => {
 
             describe('And I click in the delete all reminders button at February, 12th', () => {
               beforeEach(() => {
-                jest.spyOn(window, 'alert');
                 userEvent.click(
                   within(
                     screen.getByTestId(new Date(2021, 1, 12).toISOString())
@@ -264,7 +265,6 @@ describe('Calendar App', () => {
 
               describe('And I click in delete', () => {
                 beforeEach(() => {
-                  jest.spyOn(window, 'alert');
                   userEvent.click(
                     screen.getByRole('button', { name: /^delete$/i })
                   );
@@ -275,6 +275,28 @@ describe('Calendar App', () => {
                   expect(
                     screen.queryByText('Remind me of something')
                   ).not.toBeInTheDocument();
+                });
+              });
+
+              describe('And I update the description and save', () => {
+                beforeEach(() => {
+                  jest.clearAllMocks();
+                  userEvent.type(
+                    screen.getByRole('textbox', { name: /description/i }),
+                    'Remind me of something edited'
+                  );
+                  userEvent.click(
+                    screen.getByRole('button', { name: /save/i })
+                  );
+                });
+
+                test('Then I should see the reminder with the updated value', () => {
+                  expect(window.alert).toHaveBeenCalledWith('Reminder edited');
+                  expect(
+                    within(
+                      screen.getByTestId(new Date(2021, 1, 12).toISOString())
+                    ).getByText('Remind me of something edited')
+                  ).toBeInTheDocument();
                 });
               });
             });
