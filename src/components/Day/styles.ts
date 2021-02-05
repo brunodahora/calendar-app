@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 type DayNumberProps = {
-  isWeekend: boolean;
-  isCurrentMonth: boolean;
+  isWeekend?: boolean;
+  isCurrentMonth?: boolean;
 };
 
 const getDayColor = ({ isWeekend, isCurrentMonth }: DayNumberProps): string => {
@@ -11,12 +11,12 @@ const getDayColor = ({ isWeekend, isCurrentMonth }: DayNumberProps): string => {
   return 'black';
 };
 
-const getDayBackgroundColor = (isWeekend: boolean): string => {
+const getDayBackgroundColor = (isWeekend?: boolean): string => {
   if (isWeekend) return '#E6E6E6';
   return 'white';
 };
 
-export const DayContainer = styled.div<{ isWeekend: boolean }>`
+export const DayContainer = styled.div<{ isWeekend?: boolean }>`
   background-color: ${({ isWeekend }) => getDayBackgroundColor(isWeekend)};
   border: 8px solid ${({ isWeekend }) => getDayBackgroundColor(isWeekend)};
   display: flex;

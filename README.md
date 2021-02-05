@@ -1,4 +1,4 @@
-# Calendar App
+# 📅 Calendar App
 
 This is a sample calendar app developed with React and bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
