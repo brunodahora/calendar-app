@@ -45,3 +45,18 @@ We used the following libraries to build the project:
 - **Styled Components:** Used to create the style of our components
 - **PopperJS:** Used to set the position for the dropdown
 - **React Portal:** Wrapper to create a `React` Portal
+
+## Future Improvements
+
+- Improve inputs:
+  - Add ColorPicker
+  - Add mask to time input
+  - Add Dropdown with fixed times
+  - Add list of available cities
+- Expand list of reminder in a dropdown insted of an overflow with scroll
+- Find an open weather api that gives the weather on a specific date/time
+- Improve overall design
+
+## Screenshot
+
+![Calendar App Screenshot](https://drive.google.com/uc?export=view&id=1uD4FKDwhoiGkS2UaWt-qNbALeCSC2BBl)
