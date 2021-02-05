@@ -21,7 +21,13 @@ export const ReminderHeader = styled.h3`
 
 export const ReminderLabel = styled.label`
   font-size: 16px;
+  line-height: 24px;
   font-weight: bold;
+`;
+
+export const ReminderWeather = styled.p`
+  font-size: 16px;
+  line-height: 24px;
 `;
 
 export const ReminderInput = styled.input`

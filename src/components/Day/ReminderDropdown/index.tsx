@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, useEffect, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   ReminderDropdownContainer,
@@ -7,6 +7,7 @@ import {
   ReminderFooter,
   ReminderButton,
   ReminderHeader,
+  ReminderWeather,
 } from './styles';
 import { actions, ReminderType } from '../../../reducers';
 
@@ -33,6 +34,7 @@ const ReminderDropdown = ({
     reminder?.time ? getTimeString(reminder.time) : ''
   );
   const [city, setCity] = useState(reminder?.city || '');
+  const [weather, setWeather] = useState('Loading...');
 
   const onChange = (setter: (value: string) => void) => (
     e: ChangeEvent<HTMLInputElement>
@@ -87,6 +89,17 @@ const ReminderDropdown = ({
 
   const isDisabled = !description || !time || !color || !city;
 
+  useEffect(() => {
+    if (reminder) {
+      fetch(
+        `http://api.openweathermap.org/data/2.5/weather?appid=b9c49334791b5f77a7dbc6df7f87f187&units=metric&q=${reminder.city}`
+      )
+        .then((response) => response.json())
+        .then((json) => setWeather(json?.weather[0].main))
+        .catch(() => setWeather('ERROR'));
+    }
+  }, [reminder]);
+
   return (
     <ReminderDropdownContainer>
       <ReminderHeader>{reminder ? 'Edit' : 'Add'} Reminder</ReminderHeader>
@@ -97,6 +110,7 @@ const ReminderDropdown = ({
         id="description"
         value={description}
         onChange={onChange(setDescription)}
+        maxLength={30}
       />
       <ReminderLabel htmlFor="time">Time</ReminderLabel>
       <ReminderInput
@@ -105,6 +119,7 @@ const ReminderDropdown = ({
         id="time"
         value={time}
         onChange={onChange(setTime)}
+        maxLength={5}
       />
       <ReminderLabel htmlFor="color">Color</ReminderLabel>
       <ReminderInput
@@ -122,8 +137,14 @@ const ReminderDropdown = ({
         value={city}
         onChange={onChange(setCity)}
       />
+      {reminder && (
+        <ReminderWeather>
+          <b>Weather: </b>
+          {weather}
+        </ReminderWeather>
+      )}
       <ReminderFooter>
-        {reminder && (
+        {reminder && weather !== 'ERROR' && (
           <ReminderButton title="Delete" color="red" onClick={onDelete}>
             Delete
           </ReminderButton>
