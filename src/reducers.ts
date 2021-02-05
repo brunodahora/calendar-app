@@ -45,11 +45,26 @@ const remindersSlice: Slice<ReminderSliceState> = createSlice({
       const newReminders = state[date]
         ? [...state[date], reminder].sort(sortReminders)
         : [reminder];
-      const newState = {
+      return {
         ...state,
         [date]: newReminders,
       };
-      return newState;
+    },
+    edit: (
+      state,
+      action: PayloadAction<
+        { date: string; index: number; reminder: ReminderType },
+        string
+      >
+    ) => {
+      const {
+        payload: { date, index, reminder },
+      } = action;
+      const newReminders = state[date].filter((_, i) => index !== i) || [];
+      return {
+        ...state,
+        [date]: [...newReminders, reminder].sort(sortReminders),
+      };
     },
     delete: (
       state,

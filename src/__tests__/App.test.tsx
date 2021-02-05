@@ -283,7 +283,7 @@ describe('Calendar App', () => {
                   jest.clearAllMocks();
                   userEvent.type(
                     screen.getByRole('textbox', { name: /description/i }),
-                    'Remind me of something edited'
+                    ' edited'
                   );
                   userEvent.click(
                     screen.getByRole('button', { name: /save/i })

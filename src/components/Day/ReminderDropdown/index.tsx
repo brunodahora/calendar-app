@@ -47,7 +47,22 @@ const ReminderDropdown = ({
       errors += '\nColor must be a valid Hex value';
     }
     if (errors) alert(errors);
-    else {
+    if (index !== undefined) {
+      dispatch(
+        actions.reminders.edit({
+          date: id,
+          index,
+          reminder: {
+            description,
+            color,
+            time: parseInt(time.replace(/\D/, ''), 10),
+            city,
+          },
+        })
+      );
+      alert('Reminder edited');
+      closeReminderDropdown();
+    } else {
       dispatch(
         actions.reminders.add({
           date: id,
