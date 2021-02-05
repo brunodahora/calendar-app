@@ -15,7 +15,7 @@ import { actions, selectors } from '../../reducers';
 type Props = {
   id: string;
   day: number;
-  isWeekend: boolean;
+  isWeekend?: boolean;
   isCurrentMonth?: boolean;
 };
 
